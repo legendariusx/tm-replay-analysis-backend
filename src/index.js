@@ -65,10 +65,12 @@ app.post('/analyze', (req, res) => {
         Promise.all(savePromises).then(() => {
             replayFolder.extractReplaysFromFolder()
             .then(data => {
-                res.send(data)
+                replayFolder.deleteFilesAndFolder();
+                res.send(data);
             })
             .catch(err => {
-                res.send(err)
+                replayFolder.deleteFilesAndFolder();
+                res.send(err);
             })
         })
     }  

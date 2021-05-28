@@ -37,4 +37,12 @@ module.exports = class ReplayFolder {
             });
         })
     }
+
+    deleteFilesAndFolder() {
+        for (const replay of this.replays) {
+            replay.removeFileFromDisk();
+        }
+
+        fs.rmdirSync(this.path);
+    }
 }
