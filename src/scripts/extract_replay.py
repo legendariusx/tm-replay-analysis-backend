@@ -69,6 +69,15 @@ def find_event_end(control_entries, target_event, from_index):
     
     return None
 
+def get_race_time_from_inputs(inputs):
+    last_timestamp = 0;
+    for input in inputs:
+        try:
+            last_timestamp = max(last_timestamp, input['timestamp'])
+        except:
+            last_timestamp = max(last_timestamp, input['timestampStop'])
+    return last_timestamp
+
 # Determines whether event should be skipped
 def should_skip_event(event):
     if event.event_name in ['AccelerateReal', 'BrakeReal']:
@@ -219,6 +228,12 @@ def extract_replay(id, filename, path):
 
     replay['inputs'] = format_analog_inputs(result)
     replay['length'] = result.race_time
+
+    if not result.race_time:
+        replay['length'] = get_race_time_from_inputs(replay['inputs'])
+        replay['status'] = 'partial'
+        replay['error'] = 'Race time could not be extracted.'
+
     replay['numOfRespawns'] = result.num_respawns
     replay['gameVersion'] = result.game_version
     replay['mapUID'] = result.uid
