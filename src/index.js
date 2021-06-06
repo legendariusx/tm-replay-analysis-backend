@@ -1,14 +1,13 @@
 require("dotenv").config();
 
 const express = require("express");
-const _ = require("lodash");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 
 const { connectToDb } = require("./lib/Database");
 const { statusRoute } = require("./routes/General");
-const { analyzeReplaysRoute, testReplayRoute } = require("./routes/Analyze");
+const { analyzeReplaysRoute, demoReplayRoute } = require("./routes/Replay");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -19,9 +18,10 @@ app.use(helmet());
 
 app.get("/status", statusRoute);
 
-app.get("/testReplay", testReplayRoute);
+app.get("/replay/demo", demoReplayRoute);
 
-app.post("/analyze", analyzeReplaysRoute);
+app.post("/replay/analyze", analyzeReplaysRoute);
+app.get("/replay", () => {})
 
 // Error handling method
 app.use(function handleError(error, req, res, next) {
@@ -31,6 +31,7 @@ app.use(function handleError(error, req, res, next) {
     });
 });
 
+// Connect to databse and start server
 connectToDb().then(() => {
     app.listen(port, () => {
         console.log(

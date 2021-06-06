@@ -9,7 +9,7 @@ const { analyzeReplaySchema } = require("../schemas/Schemas");
 /**
  * Route for getting a demo replay 
  */
-const testReplayRoute = (req, res, next) => {
+const demoReplayRoute = (req, res, next) => {
     const replay = new Replay(
         uuid4(),
         "../src/test/riolu_replay.Replay.Gbx",
@@ -45,5 +45,5 @@ const analyzeReplaysRoute = (req, res, next) => {
         .catch((err) => next(err));
 };
 
+exports.demoReplayRoute = demoReplayRoute;
 exports.analyzeReplaysRoute = analyzeReplaysRoute;
-exports.testReplayRoute = testReplayRoute;
