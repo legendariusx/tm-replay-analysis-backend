@@ -236,7 +236,7 @@ def extract_replay(id, filename, path):
 
     replay['numOfRespawns'] = result.num_respawns
     replay['gameVersion'] = result.game_version
-    replay['mapUID'] = result.uid
+    replay['replayUID'] = result.uid
 
     return replay
 

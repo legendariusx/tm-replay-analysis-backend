@@ -23,6 +23,14 @@ app.get("/testReplay", testReplayRoute);
 
 app.post("/analyze", analyzeReplaysRoute);
 
+// Error handling method
+app.use(function handleError(error, req, res, next) {
+    if (!error.statusCode) error.statusCode = 500;
+    res.status(error.statusCode).send({
+        error: error.toString(),
+    });
+});
+
 connectToDb().then(() => {
     app.listen(port, () => {
         console.log(
