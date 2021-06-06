@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 // Schema for replay query
 const replayQuerySchema = Joi.object().keys({
-    limit: Joi.number().required(),
+    limit: Joi.number().required().max(50),
     fields: Joi.array().items(Joi.string().required()),
     uuid: Joi.array().items(Joi.string().required()),
     replayUID: Joi.array().items(Joi.string().required()),
