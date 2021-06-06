@@ -6,8 +6,8 @@ const spawn = require('child_process').spawn;
 module.exports = class Replay {
     /**
      * 
-     * @param {*} filename Name of replay file
-     * @param {*} base64Data Base64-encoded data of replay file
+     * @param {String} filename Name of replay file
+     * @param {Blob} base64Data Base64-encoded data of replay file
      */
     constructor(id, filename, base64Data) {
         this.id = id;
