@@ -7,7 +7,7 @@ const { replayModel } = require("../models/Replay");
  */
 const connectToDb = () => {
     return mongoose.connect(
-        `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:27017/${process.env.DB}?authSource=admin`,
+        `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:27017/${process.env.DB}?authSource=${process.env.DB_AUTH_SOURCE}`,
         {
             useUnifiedTopology: true,
             useNewUrlParser: true,
