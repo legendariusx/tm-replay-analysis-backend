@@ -1,7 +1,6 @@
 const { Buffer } = require("safe-buffer");
 const fs = require("fs");
 const path = require("path");
-const spawn = require("child_process").spawn;
 const { getReplay, createReplay } = require("./Database");
 
 /**
@@ -45,55 +44,6 @@ module.exports = class Replay {
                     resolve();
                 }
             );
-        });
-    }
-
-    /**
-     * Saves base64Data to disk and extracts inputs from replay
-     * @returns {Promise} File save and input extraction
-     */
-    saveAndExtractReplay() {
-        return new Promise((resolve, reject) => {
-            fs.writeFile(
-                this.path,
-                Buffer.from(this.base64Data, "base64"),
-                (err) => {
-                    if (err) reject({ status: "failed", error: err });
-                    this.extractInputsFromReplay()
-                        .then((data) => resolve(data))
-                        .catch((e) => reject({ status: "failed", error: e }));
-                }
-            );
-        });
-    }
-
-    /**
-     * Extracts inputs from replay file using Python script created by donadigo
-     * @returns {Promise} Extracted inputs from replay file
-     */
-    extractInputsFromReplay() {
-        return new Promise((resolve, reject) => {
-            const ls = spawn("python3", [
-                path.join(__dirname, "../scripts/extract_replay.py"),
-                this.path,
-            ]);
-
-            let output = "";
-
-            ls.stdout.on("data", (data) => {
-                output += data;
-            });
-
-            ls.stderr.on("data", (data) => {
-                reject(data);
-            });
-
-            ls.stdout.on("end", () => {
-                const replay = JSON.parse(output)[0];
-                replay.id = this.id;
-                this.data = replay;
-                resolve([replay]);
-            });
         });
     }
 

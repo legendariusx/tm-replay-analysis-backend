@@ -20,8 +20,8 @@ const connectToDb = () => {
  * @param {Object} query 
  * @returns replays 
  */
-const getReplays = (query) => {
-    return replayModel.find(query);
+const getReplays = (query, limit, select) => {
+    return replayModel.find(query).limit(limit).select(select);
 };
 
 /**

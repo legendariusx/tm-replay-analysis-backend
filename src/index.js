@@ -7,7 +7,7 @@ const helmet = require("helmet");
 
 const { connectToDb } = require("./lib/Database");
 const { statusRoute } = require("./routes/General");
-const { analyzeReplaysRoute, demoReplayRoute } = require("./routes/Replay");
+const { analyzeReplaysRoute, demoReplayRoute, getReplaysRoute } = require("./routes/Replay");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -21,7 +21,7 @@ app.get("/status", statusRoute);
 app.get("/replay/demo", demoReplayRoute);
 
 app.post("/replay/analyze", analyzeReplaysRoute);
-app.get("/replay", () => {})
+app.get("/replay", getReplaysRoute)
 
 // Error handling method
 app.use(function handleError(error, req, res, next) {
